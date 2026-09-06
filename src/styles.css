@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "Cascadia Code", "Consolas", "SF Mono", monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: #1e1e1e;
+  color: #cccccc;
+  user-select: none;
+}
+
+input,
+textarea {
+  user-select: text;
+}
+
+/* Thin VS Code–style scrollbars for panels. */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #4f4f4f;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Blinking caret used while the AI is reasoning. */
+@keyframes cl-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+.cl-caret {
+  animation: cl-blink 1s steps(1) infinite;
+}
+
+/* Gentle fade for segments as they stream in. */
+@keyframes cl-in {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.cl-stream-in {
+  animation: cl-in 140ms ease-out;
+}
+
+/* Focus ring helpers for buttons. */
+.cl-btn:focus-visible {
+  outline: 2px solid #4cc2ff;
+  outline-offset: 1px;
+}
+
+/* Inputs used in settings forms. */
+.cl-input {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #3a3a3a;
+  background: #1f1f1f;
+  color: #d4d4d4;
+  font-size: 12px;
+  padding: 5px 8px;
+  outline: none;
+}
+.cl-input:focus {
+  border-color: #0e639c;
+}
+.cl-input::placeholder {
+  color: #6a6a6a;
+}

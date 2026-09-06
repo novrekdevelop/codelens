@@ -1,0 +1,25 @@
+# Node
+node_modules/
+dist/
+*.local
+*.log
+
+# Editor
+.vscode/
+.idea/
+.qodo/
+
+# Rust / Tauri
+src-tauri/target/
+src-tauri/gen/schemas/
+src-tauri/icons/icon.ico
+src-tauri/icons/icon.icns
+src-tauri/icons/*.png
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local secrets / config (never commit real keys)
+*.pem
+.env

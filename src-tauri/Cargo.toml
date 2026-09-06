@@ -1,0 +1,30 @@
+[package]
+name = "codelens"
+version = "0.1.0"
+description = "CodeLens - see the AI's reasoning in real time"
+edition = "2021"
+
+# The `crate-type` 128 bit library is required for mobile; ignored on desktop.
+[lib]
+name = "codelens_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+reqwest = { version = "0.12", features = ["json", "stream"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync"] }
+futures-util = "0.3"
+keyring = { version = "3", features = ["windows-native"] }
+rfd = "0.15"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
