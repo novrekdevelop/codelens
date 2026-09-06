@@ -71,7 +71,7 @@ No account or API needed to install — you only configure your own AI key later
 ### Option 3 — Run from source
 
 ```bash
-git clone https://github.com/<you>/CodeLens.git   # replace <you> with the GitHub account hosting this repo
+git clone https://github.com/novrekdevelop/codelens.git
 cd CodeLens
 npm install
 npm run tauri dev
