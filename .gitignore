@@ -12,9 +12,6 @@ dist/
 # Rust / Tauri
 src-tauri/target/
 src-tauri/gen/schemas/
-src-tauri/icons/icon.ico
-src-tauri/icons/icon.icns
-src-tauri/icons/*.png
 
 # OS
 .DS_Store
