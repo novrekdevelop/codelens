@@ -1,6 +1,10 @@
 # CodeLens
 
+![License](https://img.shields.io/badge/license-MIT-blue) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey) ![Desktop](https://img.shields.io/badge/desktop-Tauri%20v2-24c8db) ![Backend](https://img.shields.io/badge/backend-Rust-orange)
+
 **A code editor whose AI shows its reasoning in real time — token by token, alternative by alternative, before it ever shows you the code.**
+
+![CodeLens icon](assets/icon-source.png)
 
 CodeLens is a lightweight, VS Code–style desktop editor. When you ask its built-in AI to change your code, the model's *thinking* streams into a side panel as it happens: which lines of your file it reads as context, which alternatives it considered and discarded, and why it finally picked the code it proposes. Only then does the diff appear, which you accept or reject line by line — like a code review.
 
@@ -18,7 +22,7 @@ Every mainstream AI editor (Copilot, Cursor, Windsurf) treats the model as a bla
 - **Diff review** — proposed code shows up as a line-level diff with accept/reject per hunk and accept/reject all.
 - **Monaco editor** — the same engine that powers VS Code: syntax highlighting, multi-cursor, minimap, find & replace.
 - **Multi-provider, BYOK** — Anthropic (Claude), OpenAI (GPT), Google (Gemini) and any OpenAI-compatible endpoint (Ollama, LM Studio, OpenRouter, Groq…), each with its own key.
-- **Secure key storage** — API keys live in your OS credential store (Windows Credential Manager / Keychain / libsecret), never in config files, never sent anywhere except the provider you chose.
+- **Secure key storage** — API keys live in your OS credential store (Windows Credential Manager / macOS Keychain / Linux Secret Service), never in config files, never sent anywhere except the provider you chose.
 - **No servers, no billing** — CodeLens ships without APIs of its own; you bring your own keys and pay the providers directly.
 - **Small and fast** — a Tauri (Rust + WebView) desktop shell: ~10–20 MB binaries, low RAM, fast startup.
 ## How the reasoning stream works
@@ -42,26 +46,59 @@ An **incremental, provider-independent parser** consumes the raw token stream in
 
 ## Installation
 
-### Run from source
+### Option 1 — One-click launchers (developers)
 
-Prerequisites: [Node.js ≥ 18](https://nodejs.org), [Rust stable](https://rustup.rs), and the system dependencies for [Tauri v2](https://tauri.app/start/prerequisites/) (on Windows: MSVC Build Tools + WebView2; on Linux: `libwebkit2gtk-4.1-dev` etc.).
+If you have [Node.js](https://nodejs.org) and [Rust](https://rustup.rs) installed, clone the repository and just double-click (or run) one file:
+
+| OS | File | How to run |
+| --- | --- | --- |
+| Windows | `start.cmd` | double-click, or `start.cmd build` / `start.cmd test` |
+| macOS | `start.sh` | `chmod +x start.sh && ./start.sh` |
+| Linux | `start.sh` | `chmod +x start.sh && ./start.sh` |
+
+The launcher installs npm dependencies on first run and starts CodeLens in development mode. Useful flags: `build` (produce installers) and `test` (run the Rust test-suite).
+
+### Option 2 — Install a release binary (everyone)
+
+Download the installer for your platform from the **Releases** page (top-right sidebar of this repository):
+
+- **Windows** — `.msi` (MSI) and `-setup.exe` (NSIS)
+- **macOS** — `.dmg`
+- **Linux** — `.deb` and `.AppImage`
+
+No account or API needed to install — you only configure your own AI key later (see [Bring your own key](#bring-your-own-key-byok)).
+
+### Option 3 — Run from source
 
 ```bash
-git clone https://github.com/<you>/codelens.git
-cd codelens
+git clone https://github.com/<you>/CodeLens.git   # replace <you> with the GitHub account hosting this repo
+cd CodeLens
 npm install
 npm run tauri dev
 ```
 
-`npm run tauri build` produces installers in `src-tauri/target/release/bundle/`.
+Prerequisites:
 
-### Install a release binary
+| OS | Required system packages |
+| --- | --- |
+| Windows 10/11 | [Node.js ≥ 18](https://nodejs.org), [Rust](https://rustup.rs), MSVC Build Tools, WebView2 (pre-installed on Windows 11) |
+| macOS | [Node.js ≥ 18](https://nodejs.org), [Rust](https://rustup.rs), Xcode Command Line Tools (`xcode-select --install`) |
+| Linux (Debian/Ubuntu) | `sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev libgtk-3-dev patchelf` plus Node.js ≥ 18 and Rust |
 
-Download the installer for your platform from the [Releases page](https://github.com/<you>/codelens/releases):
+Full instructions: [Tauri v2 prerequisites](https://tauri.app/start/prerequisites/).
 
-- Windows: `.msi` / `.exe` (NSIS)
-- macOS: `.dmg`
-- Linux: `.AppImage` / `.deb`
+### Building installers yourself
+
+`npm run tauri build` produces installers in `src-tauri/target/release/bundle/`. To build only some formats:
+
+```bash
+# Windows
+npm run tauri build -- --bundles nsis,msi
+# macOS
+npm run tauri build -- --bundles dmg
+# Linux (skip `.rpm` — only build `.deb` and `.AppImage`)
+npm run tauri build -- --bundles deb,appimage
+```
 ## Bring your own key (BYOK)
 
 CodeLens does **not** ship with its own API key and does **not** run a billing or proxying backend. Your requests go **directly** from your machine to the provider you configure, authenticated by your own key. You pay the provider for your own usage, nothing more.
@@ -83,6 +120,8 @@ Provider defaults:
 
 > For OpenAI-compatible endpoints the key is optional — local servers like Ollama and LM Studio usually accept requests without one, while OpenRouter/Groq/VLLM gateways use your key as a Bearer token.
 
+> On Linux, saved keys are stored in the desktop **Secret Service** (GNOME Keyring / KWallet). In a headless session without a keyring service, key persistence is unavailable and you will be asked to re-enter the key.
+
 ## Roadmap
 
 - [x] Monaco editor, file tree, multi-tab, save/open
@@ -96,6 +135,10 @@ Provider defaults:
 - [ ] Theme customization and command palette
 - [ ] Local model presets with auto-configured base URLs (Ollama, LM Studio)
 
+## Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for the development setup, project layout and the pull-request checklist. Please read our [Code of Conduct](CODE_OF_CONDUCT.md); security issues can be reported privately through the **Security** tab — see [SECURITY.md](SECURITY.md).
+
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) © CodeLens contributors.

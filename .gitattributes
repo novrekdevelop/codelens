@@ -1,0 +1,44 @@
+# Normalize all text files to LF so line endings stay identical no matter which
+# OS a contributor uses (CRLF in the repo causes noisy diffs and breaks
+# shell scripts).
+* text=auto eol=lf
+
+# Source & config
+*.c          text eol=lf
+*.h          text eol=lf
+*.rs         text eol=lf
+*.ts         text eol=lf
+*.tsx        text eol=lf
+*.js         text eol=lf
+*.mjs        text eol=lf
+*.json       text eol=lf
+*.json5      text eol=lf
+*.md         text eol=lf
+*.yml        text eol=lf
+*.yaml       text eol=lf
+*.toml       text eol=lf
+*.css        text eol=lf
+*.html       text eol=lf
+*.sh         text eol=lf
+*.svg        text eol=lf
+*.editorconfig text eol=lf
+
+# Windows batch files must keep CRLF for cmd.exe
+*.cmd        text eol=crlf
+*.bat        text eol=crlf
+
+# Binary assets (never diff as text, never normalize)
+*.png        binary
+*.jpg        binary
+*.jpeg       binary
+*.gif        binary
+*.ico        binary
+*.icns       binary
+*.pdf        binary
+*.zip        binary
+*.dmg        binary
+*.msi        binary
+*.exe        binary
+*.deb        binary
+*.rpm        binary
+*.AppImage   binary

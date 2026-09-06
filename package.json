@@ -4,6 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "description": "A code editor that shows the AI's reasoning in real time, token by token.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
