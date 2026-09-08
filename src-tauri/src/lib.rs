@@ -27,6 +27,7 @@ impl Default for AppState {
 pub fn run() {
     tauri::Builder::default()
         .manage(AppState::default())
+        .manage(fs_commands::ProjectState::default())
         .invoke_handler(tauri::generate_handler![
             commands::ai_request,
             commands::cancel_request,

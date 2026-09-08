@@ -72,7 +72,7 @@ No account or API needed to install — you only configure your own AI key later
 
 ```bash
 git clone https://github.com/novrekdevelop/codelens.git
-cd CodeLens
+cd codelens
 npm install
 npm run tauri dev
 ```
